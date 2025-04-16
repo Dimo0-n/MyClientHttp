@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${category.name} + ' - Detalii'">Detalii Categorie</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <h1>
+      <span th:text="${category.name}">Nume Categorie</span>
+    </h1>
+    <div class="action-buttons">
+      <a th:href="@{/categories/edit/{id}(id=${category.id})}" class="edit-btn">
+        <i class="fas fa-edit"></i> Editează
+      </a>
+      <a th:href="@{/categories}" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Înapoi
+      </a>
+    </div>
+  </header>
+
+  <div class="category-details">
+    <div class="detail-section">
+      <h3><i class="fas fa-info-circle"></i> Descriere</h3>
+      <p th:text="${category.description} ?: 'Fără descriere'" class="description-text"></p>
+    </div>
+
+    <div class="detail-section">
+      <h3><i class="fas fa-boxes"></i> Produse</h3>
+
+      <a th:href="@{/products/newProduct/{id}(id=${category.id})}" class="add-btn small">
+        <i class="fas fa-plus"></i> Adaugă Produs
+      </a>
+
+      <div th:if="${not #lists.isEmpty(category.products)}" class="products-list">
+        <div th:each="product : ${category.products}" class="product-item">
+          <div class="product-info">
+            <h4 th:text="${product.name}">Nume Produs</h4>
+            <!-- Corectare pentru tipul de date al prețului -->
+            <span th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')} + ' Lei'"
+                  class="product-price">
+            </span>
+          </div>
+          <div class="product-actions">
+            <!-- Corectare pentru ID-ul categoriei -->
+            <a th:href="@{/products/edit/{id}(id=${product.id}, categoryId=${category.id})}"
+               class="action-btn edit">
+              <i class="fas fa-edit"></i>
+            </a>
+            <form th:action="@{/products/delete/{id}(id=${product.id})}" method="post">
+              <input type="hidden" name="_method" value="delete"/> <!-- Pentru compatibilitate cu Spring -->
+              <input type="hidden" name="categoryId" th:value="${category.id}"/>
+            <button type="submit" class="delete-btn">Șterge</button>
+          </form>
+          </div>
+        </div>
+      </div>
+
+      <div th:if="${#lists.isEmpty(category.products)}" class="no-items">
+        <i class="fas fa-box-open"></i>
+        <p>Nu există produse în această categorie</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

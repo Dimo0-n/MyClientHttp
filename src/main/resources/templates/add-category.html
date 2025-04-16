@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adăugare Categorie</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1><i class="fas fa-plus-circle"></i> Adăugare Categorie Nouă</h1>
+        <a th:href="@{/categories}" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Înapoi
+        </a>
+    </header>
+
+    <form th:action="@{/categories/newCategory}" th:object="${category}" method="post" class="category-form">
+        <div class="form-group">
+            <label for="name">Nume Categorie:</label>
+            <input type="text" id="name" th:field="*{name}" required class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Descriere:</label>
+            <textarea id="description" th:field="*{description}" class="form-control" rows="4"></textarea>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="save-btn">
+                <i class="fas fa-save"></i> Salvează
+            </button>
+            <a th:href="@{/categories}" class="cancel-btn">
+                <i class="fas fa-times"></i> Anulează
+            </a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

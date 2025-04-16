@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionare Categorii Produse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1><i class="fas fa-tags"></i> Gestionare Categorii</h1>
+        <a href="/categories/add" class="add-btn">
+            <i class="fas fa-plus"></i> Adaugă Categorie
+        </a>
+    </header>
+
+    <div class="categories-container">
+        <!-- Exemplu de categorii statice -->
+        <th:block th:each="category : ${categories}">
+            <div  class="category">
+                    <a th:href="@{'/categories/' + ${category.id}}" class="category-link">
+                        <h3 th:text="${category.name}"> </h3>
+                    </a>
+            </div>
+        </th:block>
+    </div>
+</div>
+</body>
+</html>
